@@ -1,4 +1,4 @@
-# MERN Boilerplate
+# TypeScript Express Server
 
 ### Getting Started
 
