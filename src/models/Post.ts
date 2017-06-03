@@ -21,8 +21,7 @@ let PostSchema: Schema = new Schema({
   content: {
     type: String,
     default: '',
-    required: true,
-    unique: true
+    required: true
   },
   featuredImage: {
     type: String,
