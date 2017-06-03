@@ -1,7 +1,7 @@
-import * as mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
-const PostSchema = new Schema({
+
+let PostSchema: Schema = new Schema({
   timestamp: {
     type: Date,
     default: Date.now
@@ -24,10 +24,19 @@ const PostSchema = new Schema({
     required: true,
     unique: true
   },
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+  featuredImage: {
+    type: String,
+    default: ''
+  },
+  category: {
+    type: String,
+    default: '',
+    required: true
+  },
+  published: {
+    type: Boolean,
+    default: false
   }
 });
 
-export default mongoose.model('Post', PostSchema);
+export default model('Post', PostSchema);

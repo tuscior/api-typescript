@@ -22,7 +22,7 @@ export class PostRouter {
   }
 
   public getPostBySlug(req: Request, res: Response, next: NextFunction) {
-    const slug = req.params.slug;
+    const slug: string = req.params.slug;
     
     Post.findOne({slug})
     .then((post) => {
@@ -36,9 +36,12 @@ export class PostRouter {
 
   // create post
   public createPost(req: Request, res: Response, next: NextFunction): void {
-    const title = req.body.title;
-    const slug = req.body.slug;
-    const content = req.body.content;
+    const title: string = req.body.title;
+    const slug: string = req.body.slug;
+    const content: string = req.body.content;
+    const featuredImage: string = req.body.featuredImage;
+    const category: string = req.body.category;
+    const published: boolean = req.body.published;
 
     if (!title || !slug || !content) {
       res.status(422).json({ message: 'All Fields Required.' });
@@ -47,7 +50,10 @@ export class PostRouter {
     const post = new Post({
       title,
       slug,
-      content
+      content,
+      featuredImage,
+      category,
+      published
     });
 
     post.save()
@@ -62,7 +68,7 @@ export class PostRouter {
 
   // update post by slug
   public updatePost(req: Request, res: Response, next: NextFunction): void {
-    const slug = req.body.slug;
+    const slug: string = req.body.slug;
 
     Post.findOneAndUpdate({slug}, req.body)
     .then((post) => {
@@ -76,7 +82,7 @@ export class PostRouter {
 
   // delete post by slug
   public deletePost(req: Request, res: Response, next: NextFunction): void {
-    const slug = req.body.slug;
+    const slug: string = req.body.slug;
 
     Post.findOneAndRemove({slug})
     .then((post) => {
