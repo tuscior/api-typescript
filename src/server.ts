@@ -3,7 +3,6 @@ import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as compression from 'compression';
-import * as handlebars from 'handlebars';
 import * as logger from 'morgan';
 import * as helmet from 'helmet';
 import * as cors from 'cors';
