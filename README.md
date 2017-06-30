@@ -18,5 +18,4 @@ I'll be adding new features when I find the time. Expect the next feature to be 
 
 - MongoDB
 - Node/Express
-- TypeScript
-- Webpack
+- TypeScript (w/ ES6)
