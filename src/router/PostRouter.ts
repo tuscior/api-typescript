@@ -14,10 +14,22 @@ export class PostRouter {
   public getAllPosts(req: Request, res: Response, next: NextFunction) {
     Post.find()
     .then((posts) => {
-      res.status(200).json({ posts });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        posts
+      });
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        error
+      });
     })
   }
 
@@ -26,10 +38,22 @@ export class PostRouter {
     
     Post.findOne({slug})
     .then((post) => {
-      res.status(200).json({ post });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        post
+      });
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        error
+      });
     })
   }
 
@@ -58,10 +82,22 @@ export class PostRouter {
 
     post.save()
     .then((post) => {
-      res.status(200).json({ post });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        post
+      });
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        error
+      });
     })
   }
 
@@ -72,10 +108,22 @@ export class PostRouter {
 
     Post.findOneAndUpdate({slug}, req.body)
     .then((post) => {
-      res.status(200).json({ post });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        post
+      });
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        error
+      });
     })
   }
 
@@ -86,10 +134,22 @@ export class PostRouter {
 
     Post.findOneAndRemove({slug})
     .then((post) => {
-      res.status(200).json({ post });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        post
+      });
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      let code = res.statusCode;
+      let msg = res.statusMessage;
+      res.json({
+        code,
+        msg,
+        error
+      });
     })
   }
 

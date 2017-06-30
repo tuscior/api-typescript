@@ -29,8 +29,7 @@ let PostSchema: Schema = new Schema({
   },
   category: {
     type: String,
-    default: '',
-    required: true
+    default: ''
   },
   published: {
     type: Boolean,

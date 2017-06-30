@@ -11,7 +11,7 @@ import * as path from 'path';
 
 // custom modules
 import PostRouter from './router/PostRouter';
-
+import UserRouter from './router/UserRouter';
 
 // Server class
 class Server {
@@ -59,6 +59,7 @@ class Server {
 
     this.app.use('/', router);
     this.app.use('/api/v1/posts', PostRouter);
+    this.app.use('/api/v1/users', UserRouter);
   }
 }
 
