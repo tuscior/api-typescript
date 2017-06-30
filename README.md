@@ -12,7 +12,9 @@ Please be aware: This is an API-only codebase. There are no views. I recommend u
 
 ### Todo
 
-I'll be adding new features when I find the time. Expect the next feature to be Auth w/ Passport and after that, maybe Sendgrid.
+- Add Auth
+- Add Sendgrid
+- Add Twilio
 
 ### Using
 
