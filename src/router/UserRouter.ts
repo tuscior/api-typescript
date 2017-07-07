@@ -56,7 +56,10 @@ class UserRouter {
         error
       });
     })
+  }
 
+  public GetUserPosts(req: Request, res: Response): void {
+    // const posts = req.
   }
 
   public CreateUser(req: Request, res: Response): void {
@@ -151,6 +154,7 @@ class UserRouter {
   routes() {
     this.router.get('/', this.GetUsers);
     this.router.get('/:username', this.GetUser);
+    this.router.get('/:username/posts', this.GetUserPosts)
     this.router.post('/', this.CreateUser);
     this.router.put('/:username', this.UpdateUser);
     this.router.delete('/:username', this.DeleteUser);
