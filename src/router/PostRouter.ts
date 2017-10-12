@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Request, Response } from 'express';
 import Post from '../models/Post';
 
 
@@ -11,55 +11,33 @@ export class PostRouter {
     this.routes();
   }
 
-  public getAllPosts(req: Request, res: Response, next: NextFunction) {
+  // get all of the posts in the database
+  public all(req: Request, res: Response): void {
     Post.find()
-    .then((posts) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        posts
-      });
+    .then((data) => {
+      res.status(200).json({ data });
     })
     .catch((error) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        error
-      });
+      res.json({ error });
     })
   }
 
-  public getPostBySlug(req: Request, res: Response, next: NextFunction) {
+  // get a single post by params of 'slug'
+  public one(req: Request, res: Response): void {
     const slug: string = req.params.slug;
     
     Post.findOne({slug})
-    .then((post) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        post
-      });
+    .then((data) => {
+      res.status(200).json({ data });
     })
     .catch((error) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        error
-      });
+      res.status(500).json({ error });
     })
   }
 
 
-  // create post
-  public createPost(req: Request, res: Response, next: NextFunction): void {
+  // create a new post
+  public create(req: Request, res: Response): void {
     const title: string = req.body.title;
     const slug: string = req.body.slug;
     const content: string = req.body.content;
@@ -81,86 +59,50 @@ export class PostRouter {
     });
 
     post.save()
-    .then((post) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        post
-      });
+    .then((data) => {
+      res.status(201).json({ data });
     })
     .catch((error) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        error
-      });
+      res.status(500).json({ error });
     })
   }
 
 
-  // update post by slug
-  public updatePost(req: Request, res: Response, next: NextFunction): void {
+  // update post by params of 'slug'
+  public update(req: Request, res: Response): void {
     const slug: string = req.body.slug;
 
     Post.findOneAndUpdate({slug}, req.body)
-    .then((post) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        post
-      });
+    .then((data) => {
+      res.status(200).json({ data });
     })
     .catch((error) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        error
-      });
+      res.status(500).json({ error });
     })
   }
 
 
-  // delete post by slug
-  public deletePost(req: Request, res: Response, next: NextFunction): void {
+  // delete post by params of 'slug'
+  public delete(req: Request, res: Response): void {
     const slug: string = req.body.slug;
 
     Post.findOneAndRemove({slug})
-    .then((post) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        post
-      });
+    .then(() => {
+      res.status(204).end();
     })
     .catch((error) => {
-      let code = res.statusCode;
-      let msg = res.statusMessage;
-      res.json({
-        code,
-        msg,
-        error
-      });
+      res.status(500).json({ error });
     })
   }
 
 
 
   routes() {
-    this.router.get('/', this.getAllPosts);
-    this.router.get('/:slug', this.getPostBySlug);
-    this.router.post('/', this.createPost);
-    this.router.put('/:slug', this.updatePost);
-    this.router.delete('/:slug', this.deletePost);
+    this.router.get('/', this.all);
+    this.router.get('/:slug', this.one);
+    this.router.post('/', this.create);
+    this.router.put('/:slug', this.update);
+    this.router.delete('/:slug', this.delete);
   }
 
 

@@ -9,11 +9,10 @@ import * as cors from 'cors';
 import * as path from 'path';
 
 
-// custom modules
+// import our routers/controllers
 import PostRouter from './router/PostRouter';
 import UserRouter from './router/UserRouter';
 
-// Server class
 class Server {
 
   // set app to be of type express.Application
@@ -26,7 +25,7 @@ class Server {
   }
   
   // application config
-  public config() {
+  public config(): void {
 
     const MONGO_URI: string = 'mongodb://localhost/express-boilerplate'; 
     mongoose.connect(MONGO_URI || process.env.MONGODB_URI);
@@ -53,9 +52,7 @@ class Server {
 
   // application routes
   public routes(): void {
-
-    let router: express.Router;
-    router = express.Router();
+    const router: express.Router = express.Router();
 
     this.app.use('/', router);
     this.app.use('/api/v1/posts', PostRouter);
