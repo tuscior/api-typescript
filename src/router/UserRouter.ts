@@ -27,7 +27,7 @@ class UserRouter {
 
     User.findOne({ username })
     .then((data) => {
-      res.status(500).json({ data });
+      res.status(200).json({ data });
     })
     .catch((error) => {
       res.status(500).json({ error });
