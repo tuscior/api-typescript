@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "server": "tsc && nodemon ./build/index.js",
-    "start": "node ./build/index.js"
+    "server": "nodemon ./build/index.js",
+    "start": "node ./build/index.js",
+    "ts:watch": "tsc -w"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
