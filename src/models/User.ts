@@ -1,9 +1,7 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
-// TODO
-// Need to find a better way of grabbing the date, probably some biz logic in UserRouter
-
-let UserSchema: Schema = new Schema({
+// tslint:disable object-literal-sort-keys
+const UserSchema: Schema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
@@ -44,6 +42,5 @@ let UserSchema: Schema = new Schema({
     ref: 'Post'
   }]
 });
-
 
 export default model('User', UserSchema);

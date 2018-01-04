@@ -1,9 +1,9 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import User from '../models/User';
 
 class UserRouter {
 
-  router: Router;
+  public router: Router;
 
   constructor() {
     this.router = Router();
@@ -18,7 +18,7 @@ class UserRouter {
     })
     .catch((error) => {
       res.status(500).json({ error });
-    })
+    });
   
   }
 
@@ -31,16 +31,15 @@ class UserRouter {
     })
     .catch((error) => {
       res.status(500).json({ error });
-    })
+    });
   }
 
   public create(req: Request, res: Response): void {
     const firstName: string = req.body.firstName;
     const lastName: string = req.body.lastName;
     const username: string = req.body.username;
-    const email: string = req.body.email
+    const email: string = req.body.email;
     const password: string = req.body.password;
-
 
     const user = new User({
       firstName,
@@ -48,7 +47,7 @@ class UserRouter {
       username,
       email,
       password
-    })
+    });
 
     user.save()
     .then((data) => {
@@ -56,7 +55,7 @@ class UserRouter {
     })
     .catch((error) => {
       res.status(500).json({ error });
-    })
+    });
 
   }
 
@@ -69,7 +68,7 @@ class UserRouter {
     })
     .catch((error) => {
       res.status(500).json({ error });
-    })
+    });
 
   }
 
@@ -82,12 +81,12 @@ class UserRouter {
     })
     .catch((error) => {
       res.status(500).json({ error });
-    })
+    });
 
   }
 
   // set up our routes
-  routes() {
+  public routes() {
     this.router.get('/', this.all);
     this.router.get('/:username', this.one);
     this.router.post('/', this.create);
@@ -99,6 +98,5 @@ class UserRouter {
 
 const userRoutes = new UserRouter();
 userRoutes.routes();
-
 
 export default userRoutes.router;

@@ -1,7 +1,7 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
-
-let PostSchema: Schema = new Schema({
+// tslint:disable object-literal-sort-keys
+const PostSchema: Schema = new Schema({
   timestamp: {
     type: Date,
     default: Date.now

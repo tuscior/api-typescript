@@ -1,10 +1,9 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import Post from '../models/Post';
-
 
 export class PostRouter {
 
-  router: Router;
+  public router: Router;
 
   constructor() {
     this.router = Router();
@@ -19,7 +18,7 @@ export class PostRouter {
     })
     .catch((error) => {
       res.json({ error });
-    })
+    });
   }
 
   // get a single post by params of 'slug'
@@ -32,9 +31,8 @@ export class PostRouter {
     })
     .catch((error) => {
       res.status(500).json({ error });
-    })
+    });
   }
-
 
   // create a new post
   public create(req: Request, res: Response): void {
@@ -64,9 +62,8 @@ export class PostRouter {
     })
     .catch((error) => {
       res.status(500).json({ error });
-    })
+    });
   }
-
 
   // update post by params of 'slug'
   public update(req: Request, res: Response): void {
@@ -78,9 +75,8 @@ export class PostRouter {
     })
     .catch((error) => {
       res.status(500).json({ error });
-    })
+    });
   }
-
 
   // delete post by params of 'slug'
   public delete(req: Request, res: Response): void {
@@ -92,19 +88,16 @@ export class PostRouter {
     })
     .catch((error) => {
       res.status(500).json({ error });
-    })
+    });
   }
 
-
-
-  routes() {
+  public routes() {
     this.router.get('/', this.all);
     this.router.get('/:slug', this.one);
     this.router.post('/', this.create);
     this.router.put('/:slug', this.update);
     this.router.delete('/:slug', this.delete);
   }
-
 
 }
 
