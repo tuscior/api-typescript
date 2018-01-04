@@ -1,10 +1,10 @@
 {
   "name": "typescript-express-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./build/index.js",
   "license": "MIT",
   "scripts": {
-    "server": "nodemon ./build/index.js",
+    "server": "tsc && nodemon ./build/index.js",
     "start": "node ./build/index.js",
     "ts:watch": "tsc -w"
   },
