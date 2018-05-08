@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import Post from '../models/Post';
+import PostController from './postcontroller'
 
 export class PostRouter {
 
@@ -8,17 +9,6 @@ export class PostRouter {
   constructor() {
     this.router = Router();
     this.routes();
-  }
-
-  // get all of the posts in the database
-  public all(req: Request, res: Response): void {
-    Post.find()
-    .then((data) => {
-      res.status(200).json({ data });
-    })
-    .catch((error) => {
-      res.json({ error });
-    });
   }
 
   // get a single post by params of 'slug'
@@ -92,7 +82,7 @@ export class PostRouter {
   }
 
   public routes() {
-    this.router.get('/', this.all);
+    this.router.get('/', PostController.getAll);
     this.router.get('/:slug', this.one);
     this.router.post('/', this.create);
     this.router.put('/:slug', this.update);
