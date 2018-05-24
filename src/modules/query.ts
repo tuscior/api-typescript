@@ -1,43 +1,44 @@
 // import { Promise } from "mongoose";
-import { NextFunction } from "express-serve-static-core";
-import * as mongoose from 'mongoose'
+import { Request, Response, NextFunction } from "express-serve-static-core";
+import { Document, Schema, Model, model} from "mongoose";
 
 const testData = { message: "Hello" }
 
-
 export const controllers = {
-    createOne(model: mongoose.Schema, body: Object) {
-        return Promise.resolve(testData)
+    createOne(model: any, body: Object) {
+        return model.create(body)
     },
-    getOne(docToGet) {
-        return Promise.resolve(testData)
+    getOne(model: any, docToGet: string) {
+        return model.findOne({'slug': docToGet})
     },
-    getAll(model) {
-        return Promise.resolve(testData)
+    getAll(model: any) {
+        return model.find({})
     }
 }
 
-
-// export const createOne = model => (req: Request, res: Response, next: NextFunction) => {
-//     return controllers.createOne(model, req.body)
-//         .then(doc => res.json(doc))
-//         .catch(error => next(error))
-// }
-
-export const updateOne = model => async (req: Request, res: Response, next: NextFunction) => {
-    let docToUpdate = req
-
+export const createOne = (model: any) => async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    let docToUpdate = req.body
+    const doc = await controllers.createOne(model, docToUpdate)
+    if(doc) {
+        res.json({m: 'created mate'})
+    }
 }
 
-export const getAll = (model) => (req: Request, res: Response, next: NextFunction) => {
-    return controllers.getAll(model)
-      .then(docs => res.json(docs))
-      .catch(error => next(error))
+export const getAll = (model: Schema) => async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+   controllers.getAll(model)
+    .then(n=>res.json(n))
+    .catch(e=>res.json(e))
+//    docs.catch(er => res.json({m: er}))
+}
+
+export const getOne = (model: Schema) => async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+   const doc = await controllers.getOne(model, req.params.id)
 }
 
 export const generateControllers = (model: any, overrides = {}) => {
     const defaults = {
-        getAll: getAll(model)
+        getAll: getAll(model),
+        createOne: createOne(model)
     }
     return { ...defaults, ...overrides}
 }
