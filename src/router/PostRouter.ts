@@ -33,11 +33,12 @@ export class PostRouter {
   }
 
   public routes() {
-    this.router.get('/', PostController.getAll);
-    this.router.get('/:slug', this.one);
-    this.router.post('/', PostController.createOne);
-    this.router.put('/:slug', this.update);
-    this.router.delete('/:slug', this.delete);
+    this.router.param('id', PostController.findByParam)
+    this.router.get('/', PostController.getAll)
+    this.router.get('/:id', PostController.getOne)
+    this.router.post('/', PostController.createOne)
+    this.router.put('/:id', PostController.updateOne)
+    this.router.delete('/:id', PostController.deleteOne)
   }
 
 }
