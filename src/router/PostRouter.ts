@@ -11,27 +11,6 @@ export class PostRouter {
     this.routes();
   }
 
-  public one(req: Request, res: Response): void {
-    const slug: string = req.params.slug;
-    
-    Post.findOne({slug})
-    .then((data) => {
-      res.status(200).json({ data });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
-  }
-
-  public update(req: Request, res: Response): void {
-    const slug: string = req.body.slug;
-
-  }
-
-  public delete(req: Request, res: Response): void {
-    const slug: string = req.body.slug;
-  }
-
   public routes() {
     this.router.param('id', PostController.findByParam)
     this.router.get('/', PostController.getAll)
