@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from "express-serve-static-core";
 import { Document, Schema, Model, model} from "mongoose";
 
-const testData = { message: "Hello" }
+const testData = { message: "Hello World" }
 
 export const controllers = {
     getAll(model: any) {
@@ -11,15 +11,14 @@ export const controllers = {
     createOne(model: any, body: Object) {
         return model.create(body)
     },
-    getOne(docToGet: Object) {
+    getOne(docToGet: any) {
         return Promise.resolve(docToGet)
     },
-    updateOne(model: any) {
-        return Promise.resolve(testData)        
-        // return model.findOneAndUpdate({'slug': docToGet}, update)
+    updateOne(model: any, docToGet: any, update: Object) {
+        return model.findOneAndUpdate({'slug': docToGet.slug}, update, {new: true})
     },
-    deleteOne(model: any) {
-        return Promise.resolve(testData)
+    deleteOne(docToGet: any) {
+        return docToGet.remove()
     },
     findByParam(model: any, id: String) {
         return model.findById(id)
@@ -36,7 +35,9 @@ export const createOne = (model: any) => async (req: Request, res: Response, nex
 
 export const getAll = (model: Schema) => async (req: Request, res: Response, next: NextFunction): Promise<any> => {
    controllers.getAll(model)
-    .then(n=>res.json(n))
+    .then(n=>{
+        res.json(n)
+    })
     .catch(e=>res.json(e))
 //    docs.catch(er => res.json({m: er}))
 }
@@ -56,14 +57,18 @@ export const findByParam = (model: any) => async (req: any, res: Response, next:
             next(new Error(err))
         })
 }
-export const updateOne = (model: any) => async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-    controllers.updateOne(model)
-        .then(n => res.json(n))
+export const updateOne = (model: any) => async (req: any, res: Response, next: NextFunction): Promise<any> => {
+    let update = await controllers.updateOne(model, req.docFromId, req.body)
+        .then(n => {
+            res.json(n)
+        })
         .catch(error => res.json(error))
 }
 
-export const deleteOne = (model: any) => async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-    controllers.deleteOne(model)
+export const deleteOne = (model: any) => async (req: any, res: Response, next: NextFunction): Promise<any> => {
+   return controllers.deleteOne(req.docFromId)
+        .then(empty => res.json(empty))
+        .catch(err => res.json(err))
 }
 
 export const generateControllers = (model: any, overrides = {}) => {

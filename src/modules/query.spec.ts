@@ -37,29 +37,33 @@ describe('Modules', () => {
       })
     })
 
-    // describe('updateOne', () => {
-    //     it('should update one', async () => {
-    //       const result = await controllers.createOne(Post, {
-    //           "title": "This is the title",
-    //           "slug": "slug1",
-    //           "content": "content please"
-    //       })
-    //       const found = await controllers.getOne(result)
-    //       expect(found).to.equal(result)
-    //     })
-    //   })
+    describe('updateOne', () => {
+        it('should update one', async () => {
+          let post = {
+            "title": "This is the title",
+            "slug": "slug1",
+            "content": "content please"
+          }
+          let newslug = 'newslug122'
+          const result = await controllers.createOne(Post, post)
+          const update = await controllers.updateOne(Post, result, {'slug': newslug})
+          const found = await controllers.getOne(update)
+          expect(found.slug).to.equal(newslug)
+        })
+      })
 
-    // describe('deleteOne', () => {
-    //     it('should delete one', async () => {
-    //       const result = await controllers.createOne(Post, {
-    //           "title": "This is the title",
-    //           "slug": "slug1",
-    //           "content": "content please"
-    //       })
-    //       const found = await controllers.getOne(result)
-    //       expect(found).to.equal(result)
-    //     })
-    //   })
+    describe('deleteOne', () => {
+        it('should delete one', async () => {
+          const result = await controllers.createOne(Post, {
+              "title": "This is the title",
+              "slug": "slug1",
+              "content": "content please"
+          })
+          expect(await Post.findById(result.id)).to.be.an('object')
+          const deleted = await controllers.deleteOne(result)
+          expect(await Post.findById(result.id)).to.equal(null)
+        })
+      })
 
     describe('findByParams', () => {
         it('should find doc by id', async () => {

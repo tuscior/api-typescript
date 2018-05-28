@@ -17,6 +17,6 @@ export const removeModel = (modelName) => {
   }
 
 export const dropDb = () => {
-    return mongoose.connect('mongodb://localhost/tes')
+    return mongoose.connect('mongodb://localhost/testsForTes')
       .then(() => Promise.all(mongoose.modelNames().map(removeModel)))
   }
